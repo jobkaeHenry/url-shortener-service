@@ -31,7 +31,7 @@ app.use(ExpressMongoSanitize());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://175.210.245.110:3000",
     // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PUT"],

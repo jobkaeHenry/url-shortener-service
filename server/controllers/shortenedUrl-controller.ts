@@ -104,8 +104,8 @@ export const redirectToShortenUrl = async (
   // @ts-expect-error
   ExistingUrl.analytics.push(analyticsData);
   await ExistingUrl.save();
-  // 리다이렉트를 시킴
-  res.redirect(ExistingUrl.url);
+  // 리다이렉트할 url을 줌
+  res.json(ExistingUrl.url);
 };
 
 /** id(유저id)를 body로 받아가 가지고 있는 ShortenedUrl 정보를 리턴*/
