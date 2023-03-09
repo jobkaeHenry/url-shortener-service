@@ -1,8 +1,12 @@
 export const getLS = (key: string) => {
   const item = localStorage.getItem(key);
-  if (item) {
-    return JSON.parse(item);
-  } else return null;
+  let returnValue;
+  try {
+    if (item) returnValue = JSON.parse(item);
+    return returnValue;
+  } catch (err) {
+    return null;
+  }
 };
 
 export const setLS = (key: string, value: any) => {
@@ -16,5 +20,5 @@ export const removeLS = (key: string) => {
 export const cleanLS = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  localStorage.removeItem("userInfo");
+  // localStorage.removeItem("userInfo");
 };
