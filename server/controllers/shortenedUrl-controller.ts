@@ -129,9 +129,15 @@ export const getShortenedUrlsByUserId = async (
   } else
     return res.status(200).json(
       findShortenedUrlByUserId.map((shortendUrl) => {
-        const { analytics, url, _id, short_code, ...other } =
+        const { analytics, url, _id, short_code, created_at, ...other } =
           shortendUrl.toObject({ getters: true });
-        return { url, id: _id, short_code, visitCounts: analytics.length };
+        return {
+          url,
+          id: _id,
+          short_code,
+          visitCounts: analytics.length,
+          created_at,
+        };
       })
     );
 };

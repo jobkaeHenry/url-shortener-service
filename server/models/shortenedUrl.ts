@@ -15,6 +15,10 @@ const ShortenedUrlSchema = new Schema({
     ref: "User",
     required: true,
   },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
   analytics: [
     {
       browser: String,
