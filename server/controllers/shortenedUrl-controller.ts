@@ -154,8 +154,7 @@ export const deleteShortenedUrlById = async (
     return next(new HttpError("존재하지 않는 url 입니다", 404));
   }
   // 권한확인
-  // @ts-expect-error
-  else if (targetShortenedUrl.creator_id._id !== userId) {
+  else if (String(targetShortenedUrl.creator_id._id) !== userId) {
     return next(new HttpError("삭제 권한이 없습니다", 401));
   } else
     try {
