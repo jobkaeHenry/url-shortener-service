@@ -10,6 +10,7 @@ import NestedLayout, {
 } from "./layouts/router/Layout";
 import Missing from "./pages/Error/MissingPage";
 import Main from "./pages/Main/Main";
+import RedirectTo from "./pages/Main/RedirectTo";
 import Dashboard from "./pages/user/Dashboard";
 import Login from "./pages/user/login";
 import Signup from "./pages/user/Signup";
@@ -51,8 +52,10 @@ function App() {
             </Route>
           </Route>
         </Route>
+        <Route path="/:id" element={<RedirectTo />}></Route>
         {/* 404 */}
         <Route path="*" element={<Missing />} />
+        <Route path="/missing" element={<Missing />} />
       </Routes>
     </BrowserRouter>
   );
