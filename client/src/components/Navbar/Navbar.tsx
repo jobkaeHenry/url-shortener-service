@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import Text from "../atom/Text";
 import { Button } from "../atom/Button";
-import { myPage } from "@/data/URL/local/user/url";
+import { login, myPage } from "@/data/URL/local/user/url";
 
 type Props = {};
 
@@ -26,7 +26,7 @@ const Navbar = (props: Props) => {
             <Button className="ghost">마이페이지</Button>
           </Link>
         ) : (
-          <Button className="ghost">로그인</Button>
+          <Link to={login}><Button className="ghost">로그인</Button></Link>
         )}
       </ButtonWrapper>
     </NavWrapper>
