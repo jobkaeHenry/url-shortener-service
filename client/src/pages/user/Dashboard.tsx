@@ -3,14 +3,14 @@ import Text from "@/components/atom/Text";
 import TextInput from "@/components/atom/TextInput";
 import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import MobileWrapper from "@/layouts/MobileWrapper";
-import { ColumnWrapper, RowWrapper } from "@/layouts/Wrapper";
+import { RowWrapper } from "@/layouts/Wrapper";
 import { DashboardItemsType } from "@/types/user/dashBoard";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { ReactComponent as SearchIcon } from "@/assets/searchIcon.svg";
 import { Button } from "@/components/atom/Button";
 import CreatedUrlCard from "@/features/user/dashboard/components/CreatedUrlCard";
+import useLogout from "@/hooks/user/useLogout";
 
 type Props = {};
 
@@ -19,6 +19,7 @@ const Dashboard = (props: Props) => {
   const [data, setData] = useState<DashboardItemsType[]>([]);
   const [keyword, setKeyword] = useState("");
   const [filteredData, setFilteredData] = useState<DashboardItemsType[]>([]);
+  const logoutHandler = useLogout();
 
   useEffect(() => {
     if (keyword) {
@@ -28,11 +29,9 @@ const Dashboard = (props: Props) => {
 
   useEffect(() => {
     axiosPrivate.get(getCreatedURLs).then((res) => {
-      console.log(res.data);
       setData(res.data);
       setFilteredData(res.data);
     });
-    return () => {};
   }, []);
 
   return (
@@ -45,7 +44,9 @@ const Dashboard = (props: Props) => {
               <Text typography="h2">{data.length}</Text>
             </Button>
           </RowWrapper>
-          <Button className="ghost">로그아웃</Button>
+          <Button className="ghost" onClick={logoutHandler}>
+            로그아웃
+          </Button>
         </LeftWrapper>
 
         <RightWrapper>
