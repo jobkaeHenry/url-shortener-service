@@ -11,7 +11,7 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v3
       - name: Generate Environment Variables File for Production baseURL
-        run: echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env
+        run: echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env.production
         working-directory: ./client
         env:
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
@@ -19,7 +19,9 @@ jobs:
         run: yarn
         working-directory: ./client
       - name: Build
-        run: CI=false yarn build
+          run: |
+          export NODE_ENV=production
+          npm run build
         working-directory: ./client
       - name: SHOW AWS CLI VERSION
         env:
