@@ -7,6 +7,9 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "x-CSRFToken";
 axios.defaults.baseURL = BASE_URL_DEV;
 
+console.log(process.env.NODE_DEV)
+console.log(BASE_URL)
+
 if (process.env.NODE_DEV === "production") {
   axios.defaults.baseURL = BASE_URL;
 } else if (process.env.NODE_ENV === "development") {
