@@ -1,1 +1,1 @@
-export const clientBaseURL = "http://localhost:3000" as const;
+export const clientBaseURL = "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com" as const;

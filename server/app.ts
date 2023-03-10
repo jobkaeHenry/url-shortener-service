@@ -31,7 +31,7 @@ app.use(ExpressMongoSanitize());
 
 app.use(
   cors({
-    origin: "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com/",
+    origin: "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com",
     // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PUT"],
