@@ -14,8 +14,6 @@ type FormValues = {
   email: string;
   password: string;
   isSamePassword: string;
-  nickName: string;
-  image: undefined | string;
 };
 
 type Props = {};
@@ -35,7 +33,6 @@ const Signup = (props: Props) => {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const { isSamePassword, ...otherData } = data;
-    otherData.image = "";
     axios
       .post(signUp, otherData)
       .then(() => {
@@ -67,19 +64,6 @@ const Signup = (props: Props) => {
           {...register("email", {
             required: true,
             pattern: emailRegExp,
-          })}
-        />
-
-        <InputWithLabel
-          type={"text"}
-          inputWidth={"100%"}
-          weight={"var(--regular)"}
-          label={t("닉네임")}
-          placeholder={t("닉네임")}
-          error={errors.nickName ? true : false}
-          {...register("nickName", {
-            required: true,
-            min: 2,
           })}
         />
 
