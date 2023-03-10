@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { FontWeightType } from "@/types/typography";
-import { css } from "@emotion/react";
+import { css, Interpolation, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { InputHTMLAttributes } from "react";
 
@@ -10,6 +10,7 @@ export interface TextInputProp
   width?: string;
   error?: boolean;
   weight?: FontWeightType;
+  css?: Interpolation<Theme>;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
@@ -24,6 +25,7 @@ const TextInput = React.forwardRef(
           position: relative;
           width: ${width};
         `}
+
       >
         <Input type={"text"} ref={ref} {...others} />
         {Icon && (

@@ -74,14 +74,16 @@ const Main = (props: Props) => {
               ? `${clientBaseURL}/${serverResponse}`
               : "URL을 입력후 검색을 눌러주세요"}
           </ValueWithTitle>
-          <Button
-            width="175px"
-            onClick={() =>
-              handleCopyClipBoard(`${clientBaseURL}/${serverResponse}`)
-            }
-          >
-            클립보드에 복사
-          </Button>
+          {serverResponse && (
+            <Button
+              width="175px"
+              onClick={() =>
+                handleCopyClipBoard(`${clientBaseURL}/${serverResponse}`)
+              }
+            >
+              클립보드에 복사
+            </Button>
+          )}
         </RowWrapper>
       </MobileWrapper>
     </>

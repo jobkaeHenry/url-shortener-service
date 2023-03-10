@@ -20,7 +20,6 @@ const Text = styled.span`
   font-size: ${(props: TextProps) => `var(--${props.typography})`};
   font-weight: ${(props: TextProps) => (props.bold ? "var(--bold)" : null)};
   font-weight: ${(props: TextProps) => (props.weight ? props.weight : "")};
-  word-break: keep-all;
 `;
 
 export default Text;

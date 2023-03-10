@@ -7,7 +7,7 @@ const useRefreshToken = () => {
     const refreshToken = getLS("refreshToken");
     const response = await axios
       .post(refreshTokenURL, {
-        refreshToken: JSON.parse(String(refreshToken)),
+        refreshToken,
       })
       .then((res) => {
         setLS("accessToken", res.data.accessToken);
