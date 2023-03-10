@@ -14,6 +14,8 @@ import { emailRegExp, passwordRegExp } from "@/utils/regExp";
 import axios from "@/lib/api/axios";
 import { setLS } from "@/utils/localStorage";
 import { Link, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { LoginStatus } from "@/context/recoil/atom/user";
 
 type FormValues = {
   email: string;
@@ -26,6 +28,7 @@ const Login = (props: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation("user");
   const navigate = useNavigate();
+  const isLogin = useSetRecoilState(LoginStatus);
   const [serverError, setServerError] = useState("");
 
   // 훅 폼
@@ -41,7 +44,7 @@ const Login = (props: Props) => {
       .then((res) => {
         setLS("accessToken", res.data.accessToken);
         setLS("refreshToken", res.data.refreshToken);
-        setLS("userInfo", res.data.userInfo);
+        isLogin(true);
         if (window.history.length < 2) {
           navigate("/");
         } else {
