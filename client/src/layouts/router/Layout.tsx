@@ -3,6 +3,7 @@ import { LoginStatus } from "@/context/recoil/atom/user";
 import { cleanLS, getLS } from "@/utils/localStorage";
 import { Navigate, Outlet } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import DefaultLayout from "../DefaultLayout";
 
 export const LogOutOnly = () => {
   const auth = useRecoilValue(LoginStatus);
@@ -30,7 +31,9 @@ export const HeaderLayout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <DefaultLayout>
+        <Outlet />
+      </DefaultLayout>
     </>
   );
 };
