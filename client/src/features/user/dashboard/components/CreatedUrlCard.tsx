@@ -33,7 +33,7 @@ const DataWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid var(--line-gray);
+  background-color: var(--pure-white);
   border-radius: 16px;
   gap: 16px;
 `;

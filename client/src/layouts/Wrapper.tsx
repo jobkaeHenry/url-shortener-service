@@ -16,6 +16,9 @@ export const ColumnWrapper = styled.div`
   flex-direction: column;
   gap: ${(props: WrapperProps) => (props.noGap ? "0" : "8px")};
   justify-content: center;
+  &.center{
+    align-items: center;
+  }
 `;
 
 export const PaddingWrapper = styled
