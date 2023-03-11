@@ -86,13 +86,14 @@ const LeftWrapper = styled.div`
 
 const CreatedURLWrapper = styled.div`
   display: flex;
+  height: calc(100% + 60px);
   flex-direction: column;
   gap: 8px;
   padding-right: 8px 0;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 `;
