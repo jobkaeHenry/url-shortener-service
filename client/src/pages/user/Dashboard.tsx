@@ -1,16 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import Text from "@/components/atom/Text";
 import TextInput from "@/components/atom/TextInput";
 import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { ColumnWrapper, RowWrapper } from "@/layouts/Wrapper";
+import { RowWrapper } from "@/layouts/Wrapper";
 import { DashboardItemsType } from "@/types/user/dashBoard";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { ReactComponent as SearchIcon } from "@/assets/searchIcon.svg";
-import { Button } from "@/components/atom/Button";
 import CreatedUrlCard from "@/features/user/dashboard/components/CreatedUrlCard";
-import useLogout from "@/hooks/user/useLogout";
+import ValueWithTitleCard from "@/features/user/dashboard/components/ValueWithTitleCard";
 
 type Props = {};
 
@@ -39,7 +37,8 @@ const Dashboard = (props: Props) => {
 
   return (
     <Wrapper>
-      <LeftWrapper>
+      {/* 좌 */}
+      <ListWrapper>
         <TextInput
           icon={SearchIcon}
           onChange={(e) => {
@@ -51,42 +50,67 @@ const Dashboard = (props: Props) => {
             return <CreatedUrlCard {...data} key={index} />;
           })}
         </CreatedURLWrapper>
-      </LeftWrapper>
+      </ListWrapper>
 
-      <Button className="ghost" as={"div"}>
-        <ColumnWrapper className="center">
-          <Text typography="h2">{data.length}</Text>
-          <Text typography="sub">지금 까지 줄인 URL</Text>
-        </ColumnWrapper>
-      </Button>
+      {/* 우 */}
+      <AnaliticsWrapper>
+        <RowWrapper>
+          <ValueWithTitleCard
+            label={"Created Urls"}
+            value={data.length}
+            description={"현재까지 생성한 URL의 갯수입니다"}
+          />
+          <ValueWithTitleCard
+            label={"Total Visits"}
+            value={data.reduce((acc, cur) => acc + cur?.visitCounts, 0)}
+            color={"var(--font-main)"}
+            description={"링크를 통해 방문한 총 방문자 수 입니다"}
+          />
+        </RowWrapper>
+      </AnaliticsWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 76px);
   position: fixed;
-  margin: 0 auto;
-  margin-top: 10px;
+  top: 76px;
   display: flex;
   flex-direction: row;
   gap: 16px;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap-reverse;
+  }
 `;
 
-const LeftWrapper = styled.div`
+const ListWrapper = styled.div`
   padding: 16px;
-  width: 320px;
+  width: 480px;
   background-color: var(--main);
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  @media (max-width: 1024px) {
+    width: 100%;
+    height: 280px;
+  }
+`;
+const AnaliticsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
 `;
 
 const CreatedURLWrapper = styled.div`
   display: flex;
-  height: calc(100% + 60px);
   flex-direction: column;
   gap: 8px;
   padding-right: 8px 0;

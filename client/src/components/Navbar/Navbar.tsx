@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { ReactComponent as GoBack } from "../../assets/leftArrow.svg";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
@@ -17,9 +17,11 @@ const Navbar = (props: Props) => {
   const logoutHandler = useLogout();
   return (
     <NavWrapper>
-      <GoBack
+      <Logo
+        height={"26px"}
+        cursor={'pointer'}
         onClick={() => {
-          navigate(-1);
+          navigate("/");
         }}
       />
       <ButtonWrapper>
@@ -30,7 +32,7 @@ const Navbar = (props: Props) => {
               onClick={() => navigate(myPage)}
               role={"link"}
             >
-              <Text typography="p">마이페이지</Text>
+              <Text typography="sub">마이페이지</Text>
             </Button>
 
             <Button className="ghost" onClick={logoutHandler}>
@@ -61,6 +63,7 @@ const NavWrapper = styled.nav`
   top: 0;
   left: 0;
   width: 100%;
+  height: 76px;
   padding: 14px 16px;
   display: flex;
   z-index: 50;

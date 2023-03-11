@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar/Navbar";
 import { LoginStatus } from "@/context/recoil/atom/user";
-import { cleanLS, getLS } from "@/utils/localStorage";
+import useLogout from "@/hooks/user/useLogout";
+import { getLS } from "@/utils/localStorage";
 import { Navigate, Outlet } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import DefaultLayout from "../DefaultLayout";
 
 export const LogOutOnly = () => {
@@ -11,19 +12,18 @@ export const LogOutOnly = () => {
 };
 
 export const UserOnly = () => {
-  const setIslogin = useSetRecoilState(LoginStatus);
-
+  const logoutHandler = useLogout();
   const auth = () => {
     const access = getLS("accessToken");
     const refresh = getLS("refreshToken");
     if (refresh && access) {
       return true;
     } else {
-      cleanLS();
-      setIslogin(false);
+      logoutHandler();
       return false;
     }
   };
+
   return auth() ? <Outlet /> : <Navigate to="/user/login" />;
 };
 
