@@ -5,30 +5,24 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atom/Button";
 import MobileWrapper from "@/layouts/MobileWrapper";
-
 import Text from "@/components/atom/Text";
-
 import { login, signUp } from "@/data/URL/local/user/url";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { emailRegExp, passwordRegExp } from "@/utils/regExp";
 import axios from "@/lib/api/axios";
-import { setLS } from "@/utils/localStorage";
 import { Link, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { LoginStatus } from "@/context/recoil/atom/user";
+import useLogin from "@/hooks/user/useLogin";
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation("user");
   const navigate = useNavigate();
-  const isLogin = useSetRecoilState(LoginStatus);
+  const loginHandler = useLogin();
   const [serverError, setServerError] = useState("");
 
   // 훅 폼
@@ -42,9 +36,10 @@ const Login = (props: Props) => {
     axios
       .post(login, data)
       .then((res) => {
-        setLS("accessToken", res.data.accessToken);
-        setLS("refreshToken", res.data.refreshToken);
-        isLogin(true);
+        const { accessToken } = res.data;
+        const { refreshToken } = res.data;
+        loginHandler({ accessToken, refreshToken });
+
         if (window.history.length < 2) {
           navigate("/");
         } else {
@@ -94,8 +89,6 @@ const Login = (props: Props) => {
             pattern: passwordRegExp,
           })}
         />
-        {/* onCheck 핸들러 달아야함 */}
-        <Checkbox label={t("자동로그인")} />
         <Text role={"alert"} typography={"p"} color={"var(--alert-red)"}>
           {serverError}
         </Text>

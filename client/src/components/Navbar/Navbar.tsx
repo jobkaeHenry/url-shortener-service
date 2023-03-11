@@ -7,12 +7,14 @@ import { LoginStatus } from "@/context/recoil/atom/user";
 import Text from "../atom/Text";
 import { Button } from "../atom/Button";
 import { login, myPage } from "@/data/URL/local/user/url";
+import useLogout from "@/hooks/user/useLogout";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const isLogin = useRecoilValue(LoginStatus);
   const navigate = useNavigate();
+  const logoutHandler = useLogout();
   return (
     <NavWrapper>
       <GoBack
@@ -22,18 +24,36 @@ const Navbar = (props: Props) => {
       />
       <ButtonWrapper>
         {isLogin ? (
-          <Link to={myPage}>
-            <Button className="ghost">마이페이지</Button>
-          </Link>
+          <>
+            <Button
+              className="ghost"
+              onClick={() => navigate(myPage)}
+              role={"link"}
+            >
+              <Text typography="p">마이페이지</Text>
+            </Button>
+
+            <Button className="ghost" onClick={logoutHandler}>
+              <Text typography="sub">로그아웃</Text>
+            </Button>
+          </>
         ) : (
-          <Link to={login}><Button className="ghost">로그인</Button></Link>
+          <Link to={login}>
+            <Button className="ghost">
+              <Text typography="p">로그인</Text>
+            </Button>
+          </Link>
         )}
       </ButtonWrapper>
     </NavWrapper>
   );
 };
 const ButtonWrapper = styled.div`
-  width: 150px;
+  display: flex;
+  justify-content: right;
+  gap: 8px;
+  width: 100%;
+  max-width: 50%;
 `;
 
 const NavWrapper = styled.nav`
