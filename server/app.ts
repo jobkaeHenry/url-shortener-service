@@ -8,7 +8,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import shortenUrlRoute from "./routers/shortenedUrlRoute";
 import cors from "cors";
-import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import options from "./swaggerOption";
 import ExpressMongoSanitize from "express-mongo-sanitize";
@@ -31,7 +30,10 @@ app.use(ExpressMongoSanitize());
 
 app.use(
   cors({
-    origin: "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com",
+    origin: [
+      "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com",
+      "http://localhost:3000",
+    ],
     // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PUT"],
