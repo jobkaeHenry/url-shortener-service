@@ -13,10 +13,10 @@ const ValueWithTitleCard = (props: Props) => {
   return (
     <Wrapper color={color}>
       <span>{value}</span>
-        <Text typography={"h4"} bold>
-          {label}
-        </Text>
-        <Text typography={"sub"}> {description}</Text>
+      <Text typography={"h4"} bold>
+        {label}
+      </Text>
+      <Text typography={"sub"}> {description}</Text>
     </Wrapper>
   );
 };
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   & span {
     color: var(--pure-white);
   }
-  & > span:first-child {
+  & > span:first-of-type {
     font-size: 36px;
     font-weight: 800;
   }
