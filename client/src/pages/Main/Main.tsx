@@ -14,6 +14,7 @@ import { urlRegExp } from "@/utils/regExp";
 import { RowWrapper } from "@/layouts/Wrapper";
 import { Button } from "@/components/atom/form/Button";
 import { handleCopyClipBoard } from "@/utils/copyToClipBoard";
+import { client } from "@/index";
 
 type Props = {};
 
@@ -60,6 +61,7 @@ const Main = (props: Props) => {
             if (urlRegExp.test(e.target.value)) {
               setHasError(false);
               setUserInput(e.target.value);
+              client.invalidateQueries("dashboard");
             } else setHasError(true);
           }}
           type={"text"}
