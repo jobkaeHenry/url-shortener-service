@@ -79,7 +79,7 @@ const Login = () => {
           label={t("비밀번호")}
           inputWidth={"100%"}
           weight={"var(--regular)"}
-          placeholder={t("비밀번호")}
+          placeholder={t("8자리이상, 특수문자, 알파벳, 숫자 포함")}
           // icon={EyeIcon}
           error={errors.password ? true : false}
           onClick={() => setShowPassword((prev) => !prev)}
