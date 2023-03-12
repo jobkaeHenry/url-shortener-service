@@ -6,24 +6,16 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atom/Button";
 import MobileWrapper from "@/layouts/MobileWrapper";
 import Text from "@/components/atom/Text";
-import { login, signUp } from "@/data/URL/local/user/url";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { signUp } from "@/data/URL/local/user/url";
+import { useForm } from "react-hook-form";
 import { emailRegExp, passwordRegExp } from "@/utils/regExp";
-import axios from "@/lib/api/axios";
-import { Link, useNavigate } from "react-router-dom";
-import useLogin from "@/hooks/user/useLogin";
-
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { Link } from "react-router-dom";
+import { FormValues } from "@/features/user/login/types/FormValueType";
+import { useLoginHandler } from "@/features/user/login/handler/loginHandler";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation("user");
-  const navigate = useNavigate();
-  const loginHandler = useLogin();
-  const [serverError, setServerError] = useState("");
+  const { onSubmit, errorMessage } = useLoginHandler();
 
   // 훅 폼
   const {
@@ -31,31 +23,6 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    axios
-      .post(login, data)
-      .then((res) => {
-        const { accessToken } = res.data;
-        const { refreshToken } = res.data;
-        loginHandler({ accessToken, refreshToken });
-
-        if (window.history.length < 2) {
-          navigate("/");
-        } else {
-          navigate(-1);
-        }
-      })
-      .catch((err) => {
-        const ErrorCode = err?.response?.status;
-        if (ErrorCode > 499) {
-          setServerError("server Error");
-        }
-        if (ErrorCode === 401) {
-          setServerError("wrong Password");
-        }
-      });
-  };
 
   return (
     <>
@@ -66,6 +33,7 @@ const Login = () => {
           weight={"var(--regular)"}
           label={t("이메일")}
           placeholder={t("이메일")}
+          autoComplete={"username"}
           // 이메일 훅폼
           error={errors.email ? true : false}
           {...register("email", {
@@ -75,14 +43,13 @@ const Login = () => {
         />
 
         <InputWithLabel
-          type={showPassword ? "text" : "password"}
+          type={"password"}
           label={t("비밀번호")}
           inputWidth={"100%"}
           weight={"var(--regular)"}
           placeholder={t("8자리이상, 특수문자, 알파벳, 숫자 포함")}
-          // icon={EyeIcon}
+          autoComplete={"current-password"}
           error={errors.password ? true : false}
-          onClick={() => setShowPassword((prev) => !prev)}
           // 패스워드 훅폼
           {...register("password", {
             required: true,
@@ -90,7 +57,7 @@ const Login = () => {
           })}
         />
         <Text role={"alert"} typography={"p"} color={"var(--alert-red)"}>
-          {serverError}
+          {errorMessage}
         </Text>
         <Button type="submit">{t("로그인")}</Button>
 
