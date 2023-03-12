@@ -5,14 +5,35 @@ import { RowWrapper } from "@/layouts/Wrapper";
 import { DashboardItemsType } from "@/types/user/dashBoard";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
+import { ReactComponent as DeleteIcon } from "@/assets/deleteIcon.svg";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { deleteUrl } from "@/data/URL/server/newUrl/createUrl";
 
 const CreatedUrlCard = (props: DashboardItemsType) => {
+  const axiosPrivate = useAxiosPrivate();
+  const onClickHandler = (id: string) => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      axiosPrivate
+        .delete(`${deleteUrl}/${id}`)
+        .then((res) => {
+          window.alert("삭제가 완료됬습니다.");
+        })
+        .catch((err) => {
+          alert("삭제에 실패했습니다");
+        });
+    }
+  };
+
   return (
     <DataWrapper>
       <RowWrapper>
         <ValueWithTitle title={"총 방문수"}>
           {String(props.visitCounts)}
         </ValueWithTitle>
+        <DeleteIcon
+          cursor={"pointer"}
+          onClick={() => onClickHandler(props.id)}
+        />
       </RowWrapper>
 
       <div title={props.url}>
