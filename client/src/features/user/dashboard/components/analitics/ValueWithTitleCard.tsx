@@ -14,7 +14,6 @@ const ValueWithTitleCard = (props: Props) => {
   return (
     <Wrapper color={color}>
       {value ? <Title>{value}</Title> : <LoadingSpinner size={46} />}
-
       <Text typography={"h4"} bold>
         {label}
       </Text>

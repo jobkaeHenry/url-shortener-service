@@ -8,9 +8,10 @@ import { QueryClient, QueryClientProvider } from "react-query";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+export const client = new QueryClient({})
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={client}>
       <RecoilRoot>
         <App />
       </RecoilRoot>

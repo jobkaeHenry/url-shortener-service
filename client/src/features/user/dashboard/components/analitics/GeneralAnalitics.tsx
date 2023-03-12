@@ -1,13 +1,18 @@
+import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { RowWrapper } from "@/layouts/Wrapper";
 import { DashboardItemsType } from "@/types/user/dashBoard";
-import React from "react";
 import { useQuery } from "react-query";
 import ValueWithTitleCard from "./ValueWithTitleCard";
 
 type Props = {};
 
 const GeneralAnalitics = (props: Props) => {
-  const { data } = useQuery<DashboardItemsType[]>("dashboard");
+  const axiosPrivate = useAxiosPrivate();
+  const { data } = useQuery<DashboardItemsType[]>("dashboard", async () => {
+    const { data } = await axiosPrivate.get(getCreatedURLs);
+    return data;
+  });
   return (
     <RowWrapper>
       <ValueWithTitleCard

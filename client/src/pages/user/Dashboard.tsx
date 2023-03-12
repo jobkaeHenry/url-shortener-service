@@ -1,35 +1,18 @@
-/** @jsxImportSource @emotion/react */
-import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
-import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { RowWrapper } from "@/layouts/Wrapper";
-import { DashboardItemsType } from "@/types/user/dashBoard";
 import styled from "@emotion/styled";
-import { Suspense, useEffect, useState } from "react";
-import ValueWithTitleCard from "@/features/user/dashboard/components/analitics/ValueWithTitleCard";
-import { useQuery } from "react-query";
+import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
 import CreatedUrlList from "@/features/user/dashboard/components/urlList/CreatedUrlList";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "@/components/atom/lodaing/Error";
 import GeneralAnalitics from "@/features/user/dashboard/components/analitics/GeneralAnalitics";
+import DetailedAnalitics from "@/features/user/dashboard/components/analitics/DetailedAnalitics";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
-  const axiosPrivate = useAxiosPrivate();
-  const [filteredData, setFilteredData] = useState<DashboardItemsType[]>([]);
-  const [data, setData] = useState<DashboardItemsType[]>([]);
-
-  useEffect(() => {
-    axiosPrivate.get(getCreatedURLs).then((res) => {
-      setData(res.data);
-      setFilteredData(res.data);
-    });
-  }, []);
-
   return (
     <Wrapper>
-      {/* 좌 */}
+      {/* url 리스트 */}
       <ListWrapper>
         <ErrorBoundary
           fallback={<ErrorMessage message={"에러가 발생했습니다"} />}
@@ -40,7 +23,7 @@ const Dashboard = (props: Props) => {
         </ErrorBoundary>
       </ListWrapper>
 
-      {/* 우 */}
+      {/* 통계데이터 */}
       <AnaliticsWrapper>
         <ErrorBoundary
           fallback={<ErrorMessage message={"에러가 발생했습니다"} />}
@@ -49,6 +32,7 @@ const Dashboard = (props: Props) => {
             <GeneralAnalitics />
           </Suspense>
         </ErrorBoundary>
+        <DetailedAnalitics id={"as"} />
       </AnaliticsWrapper>
     </Wrapper>
   );
@@ -69,6 +53,7 @@ const Wrapper = styled.div`
 `;
 
 const ListWrapper = styled.div`
+  position: relative;
   padding: 16px;
   width: 480px;
   background-color: var(--main);
@@ -82,12 +67,16 @@ const ListWrapper = styled.div`
   }
 `;
 const AnaliticsWrapper = styled.div`
+  position: relative;
   width: 100%;
+  height: 100%;
+  padding: 0 16px 16px 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
   @media (max-width: 1024px) {
     padding: 16px;
+    height: calc(100% - 280px);
   }
 `;
 

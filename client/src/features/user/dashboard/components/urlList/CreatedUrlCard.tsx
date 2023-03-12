@@ -8,14 +8,17 @@ import dayjs from "dayjs";
 import { ReactComponent as DeleteIcon } from "@/assets/deleteIcon.svg";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { deleteUrl } from "@/data/URL/server/newUrl/createUrl";
+import { client } from "@/index";
 
 const CreatedUrlCard = (props: DashboardItemsType) => {
   const axiosPrivate = useAxiosPrivate();
+
   const onClickHandler = (id: string) => {
     if (window.confirm("삭제하시겠습니까?")) {
       axiosPrivate
         .delete(`${deleteUrl}/${id}`)
         .then((res) => {
+          client.invalidateQueries('dashboard');
           window.alert("삭제가 완료됬습니다.");
         })
         .catch((err) => {

@@ -23,6 +23,7 @@ const useAxiosPrivate = () => {
       },
       (error) => Promise.reject(error)
     );
+    
     // 답변을 가로채는 인터셉터
     const responseIntercept = axiosPrivate.interceptors.response.use(
       (response) => response,
@@ -34,7 +35,7 @@ const useAxiosPrivate = () => {
           prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }
-        return Promise.reject(error);
+        else return Promise.reject(error);
       }
     );
 
