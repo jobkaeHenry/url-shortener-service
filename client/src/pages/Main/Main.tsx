@@ -2,7 +2,7 @@ import MainCarousel from "@/features/main/Carousel";
 import MobileWrapper from "@/layouts/MobileWrapper";
 import { ReactComponent as SearchIcon } from "@/assets/searchIcon.svg";
 import Text from "@/components/atom/Text";
-import TextInput from "@/components/atom/TextInput";
+import TextInput from "@/components/atom/form/TextInput";
 import { useRecoilState } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
@@ -12,7 +12,7 @@ import ValueWithTitle from "@/components/atom/ValueWithTitle";
 import { clientBaseURL } from "@/data/URL/local/clientBaseURL";
 import { urlRegExp } from "@/utils/regExp";
 import { RowWrapper } from "@/layouts/Wrapper";
-import { Button } from "@/components/atom/Button";
+import { Button } from "@/components/atom/form/Button";
 import { handleCopyClipBoard } from "@/utils/copyToClipBoard";
 
 type Props = {};

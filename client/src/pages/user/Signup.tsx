@@ -1,4 +1,4 @@
-import InputWithLabel from "@/components/form/InputWithLabel";
+import InputWithLabel from "@/components/atom/form/InputWithLabel";
 import { login, signUp } from "@/data/URL/local/user/url";
 import MobileWrapper from "@/layouts/MobileWrapper";
 import axios from "@/lib/api/axios";
@@ -6,7 +6,7 @@ import { emailRegExp, passwordRegExp } from "@/utils/regExp";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/atom/Button";
+import { Button } from "@/components/atom/form/Button";
 import Text from "@/components/atom/Text";
 import { Link, useNavigate } from "react-router-dom";
 

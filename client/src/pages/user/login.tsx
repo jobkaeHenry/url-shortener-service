@@ -1,9 +1,6 @@
-import Checkbox from "@/components/atom/Checkbox";
-import InputWithLabel from "@/components/form/InputWithLabel";
-import { useState } from "react";
-// import EyeIcon from "@/assets/eyeIcon.svg";
+import InputWithLabel from "@/components/atom/form/InputWithLabel";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/atom/Button";
+import { Button } from "@/components/atom/form/Button";
 import MobileWrapper from "@/layouts/MobileWrapper";
 import Text from "@/components/atom/Text";
 import { signUp } from "@/data/URL/local/user/url";

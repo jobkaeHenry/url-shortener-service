@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import Text from "../atom/Text";
-import { Button } from "../atom/Button";
+import { Button } from "../atom/form/Button";
 import { login, myPage } from "@/data/URL/local/user/url";
 import useLogout from "@/hooks/user/useLogout";
 

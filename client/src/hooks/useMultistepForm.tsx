@@ -1,4 +1,4 @@
-import { SkeletonRepeated } from "@/components/atom/Skeleton";
+import { SkeletonRepeated } from "@/components/atom/lodaing/Skeleton";
 import { ReactElement, Suspense, useState } from "react";
 
 const useMultistepForm = (steps: ReactElement[], initialPage?: number) => {

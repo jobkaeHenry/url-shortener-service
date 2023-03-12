@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Button } from "@/components/atom/Button";
+import { Button } from "@/components/atom/form/Button";
 import MobileWrapper from "@/layouts/MobileWrapper";
 import { ColumnWrapper } from "@/layouts/Wrapper";
 import { css } from "@emotion/react";

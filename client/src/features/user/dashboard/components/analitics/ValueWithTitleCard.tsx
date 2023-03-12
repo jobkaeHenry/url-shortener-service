@@ -1,9 +1,10 @@
+import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
 import Text from "@/components/atom/Text";
 import styled from "@emotion/styled";
 
 type Props = {
   label: string;
-  value: number | string;
+  value?: number | string;
   description?: string;
   color?: string;
 };
@@ -12,7 +13,8 @@ const ValueWithTitleCard = (props: Props) => {
   const { label, value, description, color } = props;
   return (
     <Wrapper color={color}>
-      <span>{value}</span>
+      {value ? <Title>{value}</Title> : <LoadingSpinner size={46} />}
+
       <Text typography={"h4"} bold>
         {label}
       </Text>
@@ -36,9 +38,9 @@ const Wrapper = styled.div`
   & span {
     color: var(--pure-white);
   }
-  & > span:first-of-type {
-    font-size: 36px;
-    font-weight: 800;
-  }
+`;
+const Title = styled.span`
+  font-size: 36px;
+  font-weight: 800;
 `;
 export default ValueWithTitleCard;
