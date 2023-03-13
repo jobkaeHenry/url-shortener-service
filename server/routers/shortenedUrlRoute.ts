@@ -17,8 +17,8 @@ const router = express.Router();
  */
 router.get("/:id", redirectToShortenUrl);
 
-router.get("/analytics/:id",getAnalyticsById);
 router.use(authChecker);
+router.get("/analytics/:id",getAnalyticsById);
 router.get("/", getShortenedUrlsByUserId);
 router.post("/", createShortenedUrl);
 router.delete("/:id", deleteShortenedUrlById);
