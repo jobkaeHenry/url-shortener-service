@@ -65,6 +65,7 @@ const DataWrapper = styled.div`
   background-color: var(--pure-white);
   border-radius: 16px;
   gap: 16px;
+  cursor: pointer;
 `;
 
 export default CreatedUrlCard;

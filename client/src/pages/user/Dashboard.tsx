@@ -41,7 +41,7 @@ const Dashboard = (props: Props) => {
             {selectedUrlId ? (
               <DetailedAnalytics id={selectedUrlId} />
             ) : (
-              <>선택해주세요</>
+              <>url을 선택해주세요</>
             )}
           </Suspense>
         </ErrorBoundary>
