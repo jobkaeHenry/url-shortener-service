@@ -3,7 +3,7 @@ import HttpError from "../models/error";
 import { User } from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-import { createAccToken, createRefreshToken } from "../utils/tokenGenerator";
+import { createAccToken, createRefreshToken } from "../utils/user/tokenGenerator";
 import dotenv from "dotenv";
 
 dotenv.config();

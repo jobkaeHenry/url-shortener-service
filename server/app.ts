@@ -32,7 +32,7 @@ app.use(
   cors({
     origin: [
       "http://doznshortner.s3-website.ap-northeast-2.amazonaws.com",
-      "http://localhost:3000",
+      // "http://localhost:3000",
     ],
     // origin: "*",
     credentials: true,
@@ -58,12 +58,14 @@ app.use(((err, req, res, next) => {
 }) as ErrorRequestHandler);
 
 mongoose
+  .set("strictQuery", false)
   .connect(
     `mongodb+srv://herny:${mongoDB_PW}@url-shortener.en6kgee.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => {
     // 서버를 시작한다는 뜻
     app.listen(5000);
+    console.log(`server open ${5000} port`);
   })
   .catch((err) => {
     console.log(`몽구스 에러 ${err}`);

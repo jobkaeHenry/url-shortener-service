@@ -1,11 +1,12 @@
 import express from "express";
-import {
-  createShortenedUrl,
-  deleteShortenedUrlById,
-  redirectToShortenUrl,
-  getShortenedUrlsByUserId,
-} from "../controllers/shortenedUrl-controller";
+
+import { deleteShortenedUrlById } from "../controllers/shortenUrl/deleteShortenedUrlById";
+import { createShortenedUrl } from "../controllers/shortenUrl/createShortUrl";
+import { getShortenedUrlsByUserId } from "../controllers/shortenUrl/getShortenedUrlsByuserId";
+import { redirectToShortenUrl } from "../controllers/shortenUrl/redirectToShortenUrl";
+
 import authChecker from "../middleware/authChecker";
+import getAnalyticsById from "../controllers/analytics/getAnalyticsById";
 
 const router = express.Router();
 /**
@@ -16,6 +17,7 @@ const router = express.Router();
  */
 router.get("/:id", redirectToShortenUrl);
 
+router.get("/analytics/:id",getAnalyticsById);
 router.use(authChecker);
 router.get("/", getShortenedUrlsByUserId);
 router.post("/", createShortenedUrl);
