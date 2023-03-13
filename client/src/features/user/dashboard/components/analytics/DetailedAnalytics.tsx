@@ -42,7 +42,7 @@ const DetailedAnalytics = ({ id }: Props) => {
     }
   );
 
-  const options = {
+  const browserOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -51,6 +51,18 @@ const DetailedAnalytics = ({ id }: Props) => {
       title: {
         display: true,
         text: "사용된 브라우저",
+      },
+    },
+  };
+  const languageOption = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "사용된 언어",
       },
     },
   };
@@ -89,8 +101,8 @@ const DetailedAnalytics = ({ id }: Props) => {
     <Warpper>
       <ErrorBoundary fallback={<ErrorMessage message={"에러"} />}>
         <ChartWrarpper>
-          <Pie data={browserData} options={options} />
-          <Pie data={languageInfo} options={options} />
+          <Pie data={browserData} options={browserOptions} />
+          <Pie data={languageInfo} options={languageOption} />
         </ChartWrarpper>
       </ErrorBoundary>
       <RowWrapper>
