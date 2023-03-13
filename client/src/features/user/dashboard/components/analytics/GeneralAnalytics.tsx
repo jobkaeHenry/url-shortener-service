@@ -1,4 +1,4 @@
-import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
+import { getCreatedURLs } from "@/data/URL/server/shortUrl/createUrl";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { RowWrapper } from "@/layouts/Wrapper";
 import { DashboardItemsType } from "@/types/user/dashBoard";
@@ -23,7 +23,6 @@ const GeneralAnalytics = (props: Props) => {
       <ValueWithTitleCard
         label={"Total Visits"}
         value={data && data.reduce((acc, cur) => acc + cur?.visitCounts, 0)}
-        color={"var(--font-main)"}
         description={"링크를 통해 방문한 총 방문자 수 입니다"}
       />
     </RowWrapper>

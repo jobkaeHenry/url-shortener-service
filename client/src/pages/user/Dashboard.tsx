@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
 import CreatedUrlList from "@/features/user/dashboard/components/urlList/CreatedUrlList";
 import { ErrorBoundary } from "react-error-boundary";
@@ -10,6 +10,7 @@ import DetailedAnalytics from "@/features/user/dashboard/components/analytics/De
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  const [selectedUrlId, setSelectedUrlId] = useState("");
   return (
     <Wrapper>
       {/* url 리스트 */}
@@ -18,7 +19,7 @@ const Dashboard = (props: Props) => {
           fallback={<ErrorMessage message={"에러가 발생했습니다"} />}
         >
           <Suspense fallback={<LoadingSpinner />}>
-            <CreatedUrlList />
+            <CreatedUrlList setSelectedUrlId={setSelectedUrlId} />
           </Suspense>
         </ErrorBoundary>
       </ListWrapper>
@@ -32,7 +33,18 @@ const Dashboard = (props: Props) => {
             <GeneralAnalytics />
           </Suspense>
         </ErrorBoundary>
-        <DetailedAnalytics id={"as"} />
+
+        <ErrorBoundary
+          fallback={<ErrorMessage message={"에러가 발생했습니다"} />}
+        >
+          <Suspense fallback={<LoadingSpinner />}>
+            {selectedUrlId ? (
+              <DetailedAnalytics id={selectedUrlId} />
+            ) : (
+              <>선택해주세요</>
+            )}
+          </Suspense>
+        </ErrorBoundary>
       </AnaliticsWrapper>
     </Wrapper>
   );

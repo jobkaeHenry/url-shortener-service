@@ -6,12 +6,42 @@ import { ErrorBoundary } from "react-error-boundary";
 import ValueWithTitleCard from "./ValueWithTitleCard";
 import { Chart as ChartJS, ArcElement, Title, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { useQuery } from "react-query";
+import { DetailedAnaliticsType } from "@/types/user/dashBoard";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { getDetailedAnalytics } from "@/data/URL/server/shortUrl/analytics";
 ChartJS.register(ArcElement, Title, Tooltip);
 
 type Props = { id: string };
 
-const DetailedAnalytics = (props: Props) => {
-  const labels = ["예시1", "예시2", "예시3", "예시4", "예시5"];
+const DetailedAnalytics = ({ id }: Props) => {
+  const axiosPrivate = useAxiosPrivate();
+
+  const { data } = useQuery<DetailedAnaliticsType>(
+    ["analytics", id],
+    async () => {
+      if (id) {
+        const { data } = await axiosPrivate.get(
+          `${getDetailedAnalytics}/${id}`
+        );
+        return data;
+      }
+    },
+    {
+      select: (data) => {
+        const sortedBrowser = data.browserInfo.sort(
+          (a, b) => b.count - a.count
+        );
+        const sortedlanguage = data.language.sort((a, b) => b.count - a.count);
+        return { browserInfo: sortedBrowser, language: sortedlanguage };
+      },
+      suspense: true,
+      retry: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const options = {
     responsive: true,
     plugins: {
@@ -24,11 +54,11 @@ const DetailedAnalytics = (props: Props) => {
       },
     },
   };
-  const data = {
-    labels,
+  const browserData = {
+    labels: data?.browserInfo.map((e) => e?.name),
     datasets: [
       {
-        data: [1, 2, 3, 4, 5],
+        data: data?.browserInfo.map((e) => e?.count),
         backgroundColor: [
           "rgb(131, 150, 177)",
           "rgb(113, 139, 179)",
@@ -39,20 +69,43 @@ const DetailedAnalytics = (props: Props) => {
       },
     ],
   };
-  return (
+  const languageInfo = {
+    labels: data?.language.map((e) => e?.name),
+    datasets: [
+      {
+        data: data?.language.map((e) => e?.count),
+        backgroundColor: [
+          "rgb(131, 150, 177)",
+          "rgb(113, 139, 179)",
+          "rgb(85, 118, 168)",
+          "rgb(60, 104, 170)",
+          "rgb(33, 80, 150)",
+        ],
+      },
+    ],
+  };
+
+  return data?.browserInfo.length !== 0 ? (
     <Warpper>
       <ErrorBoundary fallback={<ErrorMessage message={"에러"} />}>
         <ChartWrarpper>
-          <Pie data={data} options={options} />
-          <Pie data={data} options={options} />
+          <Pie data={browserData} options={options} />
+          <Pie data={languageInfo} options={options} />
         </ChartWrarpper>
       </ErrorBoundary>
       <RowWrapper>
-        <ValueWithTitleCard value={1} label={"브라우저"} />
-        <ValueWithTitleCard value={1} label={"언어"} />
-        <ValueWithTitleCard value={1} label={"일시"} />
+        <ValueWithTitleCard
+          value={data?.browserInfo[0]?.name}
+          description={"가장 많이 사용된 브라우저"}
+        />
+        <ValueWithTitleCard
+          value={data?.language[0]?.name}
+          description={"가장 많이 사용된 언어"}
+        />
       </RowWrapper>
     </Warpper>
+  ) : (
+    <>방문자가 없습니다</>
   );
 };
 const ChartWrarpper = styled.div`
@@ -66,6 +119,7 @@ const ChartWrarpper = styled.div`
 `;
 
 const Warpper = styled.div`
+  padding: 16px;
   width: 100%;
   height: 100%;
   display: flex;

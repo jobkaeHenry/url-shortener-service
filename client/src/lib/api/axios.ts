@@ -21,5 +21,7 @@ export const axiosPrivate = axios.create({
 });
 
 export default axios.create({
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });

@@ -1,4 +1,4 @@
-import { redirectTo } from "@/data/URL/server/newUrl/createUrl";
+import { redirectTo } from "@/data/URL/server/shortUrl/createUrl";
 import axios from "@/lib/api/axios";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";

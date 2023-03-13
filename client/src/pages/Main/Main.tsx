@@ -6,7 +6,7 @@ import TextInput from "@/components/atom/form/TextInput";
 import { useRecoilState } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { createUrl } from "@/data/URL/server/newUrl/createUrl";
+import { createUrl } from "@/data/URL/server/shortUrl/createUrl";
 import { useCallback, useState } from "react";
 import ValueWithTitle from "@/components/atom/ValueWithTitle";
 import { clientBaseURL } from "@/data/URL/local/clientBaseURL";

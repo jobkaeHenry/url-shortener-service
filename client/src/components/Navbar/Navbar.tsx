@@ -55,7 +55,7 @@ const ButtonWrapper = styled.div`
   justify-content: right;
   gap: 8px;
   width: 100%;
-  max-width: 50%;
+  max-width: 60%;
 `;
 
 const NavWrapper = styled.nav`

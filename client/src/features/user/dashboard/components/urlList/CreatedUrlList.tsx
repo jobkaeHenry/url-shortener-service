@@ -1,15 +1,19 @@
 import TextInput from "@/components/atom/form/TextInput";
-import { getCreatedURLs } from "@/data/URL/server/newUrl/createUrl";
+import { getCreatedURLs } from "@/data/URL/server/shortUrl/createUrl";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { DashboardItemsType } from "@/types/user/dashBoard";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useQuery } from "react-query";
 import CreatedUrlCard from "../urlList/CreatedUrlCard";
 import { ReactComponent as SearchIcon } from "@/assets/searchIcon.svg";
 import Text from "@/components/atom/Text";
 import styled from "@emotion/styled";
 
-const CreatedUrlList = () => {
+type Props = {
+  setSelectedUrlId: Dispatch<SetStateAction<string>>;
+};
+
+const CreatedUrlList = ({ setSelectedUrlId }: Props) => {
   const [keyword, setKeyword] = useState("");
   const axiosPrivate = useAxiosPrivate();
   const { data } = useQuery<DashboardItemsType[]>(
@@ -19,7 +23,6 @@ const CreatedUrlList = () => {
       return data;
     },
     {
-      suspense: true,
       select: (data) => {
         if (keyword) {
           return data.filter((data) =>
@@ -41,7 +44,13 @@ const CreatedUrlList = () => {
       <CreatedURLWrapper>
         {data?.length ? (
           data.map((data, index) => {
-            return <CreatedUrlCard {...data} key={index} />;
+            return (
+              <CreatedUrlCard
+                {...data}
+                key={index}
+                setSelectedUrlId={setSelectedUrlId}
+              />
+            );
           })
         ) : (
           <Text typography={"sub"} color={"var(--pure-white)"}>

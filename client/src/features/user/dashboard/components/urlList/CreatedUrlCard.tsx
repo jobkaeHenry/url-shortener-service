@@ -7,18 +7,23 @@ import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { ReactComponent as DeleteIcon } from "@/assets/deleteIcon.svg";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { deleteUrl } from "@/data/URL/server/newUrl/createUrl";
+import { deleteUrl } from "@/data/URL/server/shortUrl/createUrl";
 import { client } from "@/index";
+import { Dispatch, SetStateAction } from "react";
 
-const CreatedUrlCard = (props: DashboardItemsType) => {
+type Props = {
+  setSelectedUrlId: Dispatch<SetStateAction<string>>;
+} & DashboardItemsType;
+
+const CreatedUrlCard = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
 
-  const onClickHandler = (id: string) => {
+  const deleteHandler = (id: string) => {
     if (window.confirm("삭제하시겠습니까?")) {
       axiosPrivate
         .delete(`${deleteUrl}/${id}`)
         .then((res) => {
-          client.invalidateQueries('dashboard');
+          client.invalidateQueries("dashboard");
           window.alert("삭제가 완료됬습니다.");
         })
         .catch((err) => {
@@ -28,14 +33,14 @@ const CreatedUrlCard = (props: DashboardItemsType) => {
   };
 
   return (
-    <DataWrapper>
+    <DataWrapper onClick={()=>props.setSelectedUrlId(props.id)}>
       <RowWrapper>
         <ValueWithTitle title={"총 방문수"}>
           {String(props.visitCounts)}
         </ValueWithTitle>
         <DeleteIcon
           cursor={"pointer"}
-          onClick={() => onClickHandler(props.id)}
+          onClick={() => deleteHandler(props.id)}
         />
       </RowWrapper>
 

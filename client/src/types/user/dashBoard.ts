@@ -5,3 +5,13 @@ export interface DashboardItemsType {
   created_at: string;
   visitCounts: number;
 }
+
+export interface DetailedAnaliticsType {
+  browserInfo: AnalizedData[];
+  language: AnalizedData[];
+}
+
+interface AnalizedData {
+  name: string;
+  count: number;
+}

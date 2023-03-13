@@ -3,7 +3,7 @@ import Text from "@/components/atom/Text";
 import styled from "@emotion/styled";
 
 type Props = {
-  label: string;
+  label?: string;
   value?: number | string;
   description?: string;
   color?: string;
@@ -14,9 +14,11 @@ const ValueWithTitleCard = (props: Props) => {
   return (
     <Wrapper color={color}>
       {value ? <Title>{value}</Title> : <LoadingSpinner size={46} />}
-      <Text typography={"h4"} bold>
-        {label}
-      </Text>
+      {label && (
+        <Text typography={"h4"} bold>
+          {label}
+        </Text>
+      )}
       <Text typography={"sub"}> {description}</Text>
     </Wrapper>
   );
@@ -32,14 +34,12 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 8px;
-  background-color: ${(props) => (props.color ? props.color : "var(--main)")};
-
-  & span {
-    color: var(--pure-white);
-  }
+  border: 1px solid;
+  border-color: ${(props) => (props.color ? props.color : "var(--line-gray)")};
 `;
 const Title = styled.span`
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 800;
+  color: var(--main);
 `;
 export default ValueWithTitleCard;
