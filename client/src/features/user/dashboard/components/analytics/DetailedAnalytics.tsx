@@ -10,7 +10,7 @@ ChartJS.register(ArcElement, Title, Tooltip);
 
 type Props = { id: string };
 
-const DetailedAnalitics = (props: Props) => {
+const DetailedAnalytics = (props: Props) => {
   const labels = ["예시1", "예시2", "예시3", "예시4", "예시5"];
   const options = {
     responsive: true,
@@ -75,4 +75,4 @@ const Warpper = styled.div`
   border: 1px solid var(--line-gray);
 `;
 
-export default DetailedAnalitics;
+export default DetailedAnalytics;

@@ -7,7 +7,7 @@ import ValueWithTitleCard from "./ValueWithTitleCard";
 
 type Props = {};
 
-const GeneralAnalitics = (props: Props) => {
+const GeneralAnalytics = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   const { data } = useQuery<DashboardItemsType[]>("dashboard", async () => {
     const { data } = await axiosPrivate.get(getCreatedURLs);
@@ -30,4 +30,4 @@ const GeneralAnalitics = (props: Props) => {
   );
 };
 
-export default GeneralAnalitics;
+export default GeneralAnalytics;

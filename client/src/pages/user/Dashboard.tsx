@@ -4,8 +4,8 @@ import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
 import CreatedUrlList from "@/features/user/dashboard/components/urlList/CreatedUrlList";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessage from "@/components/atom/lodaing/Error";
-import GeneralAnalitics from "@/features/user/dashboard/components/analitics/GeneralAnalitics";
-import DetailedAnalitics from "@/features/user/dashboard/components/analitics/DetailedAnalitics";
+import GeneralAnalytics from "@/features/user/dashboard/components/analytics/GeneralAnalytics";
+import DetailedAnalytics from "@/features/user/dashboard/components/analytics/DetailedAnalytics";
 
 type Props = {};
 
@@ -29,10 +29,10 @@ const Dashboard = (props: Props) => {
           fallback={<ErrorMessage message={"에러가 발생했습니다"} />}
         >
           <Suspense fallback={<LoadingSpinner />}>
-            <GeneralAnalitics />
+            <GeneralAnalytics />
           </Suspense>
         </ErrorBoundary>
-        <DetailedAnalitics id={"as"} />
+        <DetailedAnalytics id={"as"} />
       </AnaliticsWrapper>
     </Wrapper>
   );
