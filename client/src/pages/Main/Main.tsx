@@ -42,7 +42,7 @@ const Main = (props: Props) => {
       onSuccess: () => {
         client.invalidateQueries("dashboard");
       },
-      onError: () => {
+      onError: (err) => {
         inputRef.current?.focus();
       },
     }

@@ -17,7 +17,7 @@ const GeneralAnalytics = (props: Props) => {
     <RowWrapper>
       <ValueWithTitleCard
         label={"Created Urls"}
-        value={data && data.length}
+        value={data && (data.length)}
         description={"현재까지 생성한 URL의 갯수입니다"}
       />
       <ValueWithTitleCard

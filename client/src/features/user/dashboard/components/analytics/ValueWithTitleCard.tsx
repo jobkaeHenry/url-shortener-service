@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
+
 import Text from "@/components/atom/Text";
 import styled from "@emotion/styled";
 
@@ -13,7 +13,7 @@ const ValueWithTitleCard = (props: Props) => {
   const { label, value, description, color } = props;
   return (
     <Wrapper color={color}>
-      {value ? <Title>{value}</Title> : <LoadingSpinner size={46} />}
+      <Title>{value ? value : 0}</Title>
       {label && (
         <Text typography={"h4"} bold>
           {label}
@@ -41,7 +41,7 @@ const Title = styled.span`
   font-size: 24px;
   font-weight: 800;
   color: var(--main);
-  @media screen and (max-width:425px){
+  @media screen and (max-width: 425px) {
     font-size: 18px;
   }
 `;
