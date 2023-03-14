@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { createUrl } from "@/data/URL/server/shortUrl/createUrl";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ValueWithTitle from "@/components/atom/ValueWithTitle";
 import { clientBaseURL } from "@/data/URL/local/clientBaseURL";
 import { urlRegExp } from "@/utils/regExp";
@@ -22,23 +22,28 @@ import { DashboardItemsType } from "@/types/user/dashBoard";
 type Props = {};
 
 const Main = (props: Props) => {
-  const [userInput, setUserInput] = useState("https://");
+  const [userInput, setUserInput] = useState("");
   const axiosPrivate = useAxiosPrivate();
   const isLogin = useRecoilValue(LoginStatus);
 
   const handleSubmit: MutationFunction<{ data: DashboardItemsType }, string> = (
     value
   ) => {
-    if (urlRegExp.test(value)) {
+    if (userInput) {
       return axiosPrivate.post(createUrl, { url: value });
     } else return Promise.reject();
   };
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { mutate, isError, isLoading, isSuccess, data } = useMutation(
     handleSubmit,
     {
       onSuccess: () => {
         client.invalidateQueries("dashboard");
+      },
+      onError: () => {
+        inputRef.current?.focus();
       },
     }
   );
@@ -52,14 +57,17 @@ const Main = (props: Props) => {
         </Text>
         <TextInput
           onChange={(e) => {
-            setUserInput(e.target.value);
+            if (urlRegExp.test(e.target.value)) {
+              setUserInput(e.target.value);
+            } else setUserInput("");
           }}
           type={"text"}
           disabled={!isLogin}
-          defaultValue={userInput}
+          defaultValue={"https://"}
           onClick={() => mutate(userInput)}
           icon={SearchIcon}
-          error={isError}
+          error={isError || !userInput}
+          ref={inputRef}
         ></TextInput>
         <RowWrapper>
           {isSuccess && (
