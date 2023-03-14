@@ -3,11 +3,11 @@ import MobileWrapper from "@/layouts/MobileWrapper";
 import { ReactComponent as SearchIcon } from "@/assets/searchIcon.svg";
 import Text from "@/components/atom/Text";
 import TextInput from "@/components/atom/form/TextInput";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { LoginStatus } from "@/context/recoil/atom/user";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { createUrl } from "@/data/URL/server/shortUrl/createUrl";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import ValueWithTitle from "@/components/atom/ValueWithTitle";
 import { clientBaseURL } from "@/data/URL/local/clientBaseURL";
 import { urlRegExp } from "@/utils/regExp";
@@ -15,38 +15,32 @@ import { RowWrapper } from "@/layouts/Wrapper";
 import { Button } from "@/components/atom/form/Button";
 import { handleCopyClipBoard } from "@/utils/copyToClipBoard";
 import { client } from "@/index";
+import { LoadingSpinner } from "@/components/atom/lodaing/Spinner";
+import { MutationFunction, useMutation } from "react-query";
+import { DashboardItemsType } from "@/types/user/dashBoard";
 
 type Props = {};
 
 const Main = (props: Props) => {
   const [userInput, setUserInput] = useState("https://");
-  const [serverResponse, setServerResponse] = useState("");
-  const [hasError, setHasError] = useState(false);
-  const isLogin = useRecoilState(LoginStatus);
-
   const axiosPrivate = useAxiosPrivate();
-  const handleSubmit = (value: string) => {
-    axiosPrivate
-      .post(createUrl, { url: value })
-      .then((res) => {
-        setServerResponse(res.data.short_code);
-      })
-      .catch((err) => {
-        alert("로그인 후에 이용가능합니다");
-      });
+  const isLogin = useRecoilValue(LoginStatus);
+
+  const handleSubmit: MutationFunction<{ data: DashboardItemsType }, string> = (
+    value
+  ) => {
+    if (urlRegExp.test(value)) {
+      return axiosPrivate.post(createUrl, { url: value });
+    } else return Promise.reject();
   };
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      if (isLogin && urlRegExp.test(userInput)) {
-        handleSubmit(userInput);
-      } else if (!isLogin && !hasError) {
-        alert("로그인 후에 이용가능합니다");
-      } else if (hasError) {
-        alert("유효하지 않은 URL입니다");
-      }
-    },
-    [isLogin, hasError]
+  const { mutate, isError, isLoading, isSuccess, data } = useMutation(
+    handleSubmit,
+    {
+      onSuccess: () => {
+        client.invalidateQueries("dashboard");
+      },
+    }
   );
 
   return (
@@ -58,34 +52,34 @@ const Main = (props: Props) => {
         </Text>
         <TextInput
           onChange={(e) => {
-            if (urlRegExp.test(e.target.value)) {
-              setHasError(false);
-              setUserInput(e.target.value);
-              client.invalidateQueries("dashboard");
-            } else setHasError(true);
+            if (urlRegExp.test(e.target.value)) setUserInput(e.target.value);
           }}
           type={"text"}
-          defaultValue={userInput}
-          onClick={handleClick}
+          disabled={!isLogin}
+          defaultValue={!isLogin ? "로그인 후 이용가능합니다" : userInput}
+          onClick={() => mutate(userInput)}
           icon={SearchIcon}
-          error={hasError}
+          error={isError}
         ></TextInput>
         <RowWrapper>
-          <ValueWithTitle title={"결과"}>
-            {serverResponse
-              ? `${clientBaseURL}/${serverResponse}`
-              : "URL을 입력후 검색을 눌러주세요"}
-          </ValueWithTitle>
-          {serverResponse && (
-            <Button
-              width="175px"
-              onClick={() =>
-                handleCopyClipBoard(`${clientBaseURL}/${serverResponse}`)
-              }
-            >
-              클립보드에 복사
-            </Button>
+          {isSuccess && (
+            <>
+              <ValueWithTitle
+                title={"결과"}
+              >{`${clientBaseURL}/${data.data.short_code}`}</ValueWithTitle>
+              <Button
+                width="175px"
+                onClick={() =>
+                  handleCopyClipBoard(
+                    `${clientBaseURL}/${data.data.short_code}`
+                  )
+                }
+              >
+                복사
+              </Button>
+            </>
           )}
+          {isLoading && <LoadingSpinner />}
         </RowWrapper>
       </MobileWrapper>
     </>
