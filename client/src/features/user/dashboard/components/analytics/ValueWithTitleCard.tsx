@@ -41,5 +41,8 @@ const Title = styled.span`
   font-size: 24px;
   font-weight: 800;
   color: var(--main);
+  @media screen and (max-width:425px){
+    font-size: 18px;
+  }
 `;
 export default ValueWithTitleCard;

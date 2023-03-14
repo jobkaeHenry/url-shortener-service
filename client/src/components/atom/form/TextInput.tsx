@@ -11,7 +11,7 @@ export interface TextInputProp
   error?: boolean;
   weight?: FontWeightType;
   css?: Interpolation<Theme>;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
 // eslint-disable-next-line react/display-name
