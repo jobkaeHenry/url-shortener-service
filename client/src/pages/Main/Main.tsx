@@ -52,11 +52,11 @@ const Main = (props: Props) => {
         </Text>
         <TextInput
           onChange={(e) => {
-            if (urlRegExp.test(e.target.value)) setUserInput(e.target.value);
+            setUserInput(e.target.value);
           }}
           type={"text"}
           disabled={!isLogin}
-          defaultValue={!isLogin ? "로그인 후 이용가능합니다" : userInput}
+          defaultValue={userInput}
           onClick={() => mutate(userInput)}
           icon={SearchIcon}
           error={isError}
