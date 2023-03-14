@@ -1,6 +1,6 @@
 import { redirectTo } from "@/data/URL/server/shortUrl/createUrl";
 import axios from "@/lib/api/axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 type Props = {};
@@ -12,7 +12,9 @@ const RedirectTo = (props: Props) => {
     axios
       .get(`${redirectTo}/${id}`)
       .then((res) => {
-        window.location.assign(res.data);
+        window.location.assign(
+          res.data.includes("http") ? res.data : `https://${res.data}`
+        );
       })
       .catch((err) => {
         navigate("/missing");
